@@ -1,0 +1,91 @@
+<html lang="fr">
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+</head>
+<body>
+<div id="actionnaire">
+    <div class="row-fluid">
+        <div class="span3">
+            <label>Sexe</label>
+            <label class="checkbox inline">
+                <input id="actionnaireSexeFemme" type="checkbox">F
+            </label>
+            <label class="checkbox inline">
+                <input id="actionnaireSexeHomme" type="checkbox">M
+            </label>
+        </div>
+        <div class="span4">
+            <label for="actionnaireDateDeNaissance">Date de Naissance</label>
+            <input id="actionnaireDateDeNaissance" type="text" placeholder="AAAA-MM-JJ">
+        </div>
+        <div class="span4">
+            <label for="actionnaireNas">NAS</label>
+            <input id="actionnaireNas" type="text" class="span12 ng-pristine ng-valid">
+        </div>
+    </div>
+    <label>Nom</label>
+    <input id="actionnairePrenom" type="text" placeholder="Prénom">
+    <input id="actionnaireNom" type="text" placeholder="Nom de famille">
+    <label>Adresse</label>
+    <input id="actionnaireAdresseRecherche" type="text" placeholder="Commencez à saisir votre adresse"
+           autocomplete="off">
+    <input id="actionnaireNumeroCivique" type="text" placeholder="Numéro">
+    <input id="actionnaireRue" type="text" placeholder="Rue">
+    <input id="actionnaireAppartement" type="text" placeholder="App">
+    <input id="actionnaireVille" type="text" placeholder="Ville">
+    <input id="actionnaireProvince" type="text" placeholder="Province">
+    <input id="actionnaireCodePostal" type="text" placeholder="Code postal">
+    <label>Téléphone</label>
+
+    <div class="row-fluid">
+        <input id="actionnaireNumeroDeTelephone" type="text" placeholder="Résidence">
+        <input id="actionnaireNumeroDeTelephoneAutre" type="text" placeholder="Travail/Cellulaire">
+        <input id="actionnaireNumeroDeTelephoneAutrePoste" type="text" placeholder="Poste">
+    </div>
+    <label>Adresse courriel</label>
+    <input id="actionnaireCourriel" type="text">
+</div>
+<link rel="stylesheet" type="text/css" href="https://ws1.postescanada-canadapost.ca/css/addresscomplete-2.00.min.css">
+<script type="text/javascript" src="https://ws1.postescanada-canadapost.ca/js/addresscomplete-2.00.js"></script>
+
+<script type="text/javascript">
+
+    var fields = [
+        { element: "actionnaireAdresseRecherche", mode: pca.fieldMode.SEARCH },
+        { element: "actionnaireRue", field: "Street", mode: pca.fieldMode.POPULATE },
+        { element: "actionnaireNumeroCivique", field: "BuildingNumber", mode: pca.fieldMode.POPULATE },
+        { element: "actionnaireAppartement", field: "SubBuilding", mode: pca.fieldMode.POPULATE },
+        { element: "actionnaireVille", field: "City", mode: pca.fieldMode.POPULATE },
+        { element: "actionnaireProvince", field: "ProvinceName", mode: pca.fieldMode.POPULATE },
+        { element: "actionnaireCodePostal", field: "PostalCode" }
+    ];
+    options = {
+        key: "RE49-RM71-UC95-XU84"
+        //maxItems: 50,
+        //setCountryByIP: false,
+        //bar: {
+        //    visible: false
+        //}
+    };
+    control = new pca.Address(fields, options);
+
+    pca.addressComplete.listen('ready', function() {
+        control.setCountry("France");
+        control.setCulture("fr-CA");
+        console.log('ready');
+    });
+
+    pca.addressComplete.listen('options', function(options) {
+        options.bar = options.bar || {};
+        options.bar.showCountry = false;
+        options.bar.showLogo = true;
+        options.bar.logoLink = false;
+    });
+
+    control.listen("populate", function (address) {
+        console.log('oh yeah!')
+    });
+
+</script>
+</body>
+</html>
