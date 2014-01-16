@@ -1,23 +1,25 @@
-ac = angular.module('fa-address-complete', [])
+ac = angular.module('ac-address-complete', [])
 
-ac.directive 'faAddressComplete', ->
+ac.directive 'acAddressComplete', ->
 
   restrict: 'A'
 
   scope:
-    fields: '=faFields'
-    options: '=faOptions'
-    onPopulate: '&faOnPopulate'
+    models: '=acModels'
+    options: '=acOptions'
+    onPopulate: '&acOnPopulate'
 
-  link: (scope, element)->
-    control = new pca.Address(scope.fields, scope.options)
+  link: (scope, element, attrs)->
+    elementId = attrs.id
+
+    control = new pca.Address([{ element: elementId, mode: pca.fieldMode.SEARCH }], scope.options)
 
     control.listen("populate", (address)->
-      for field in scope.fields
-        mode = field.mode
-        if mode == pca.fieldMode.POPULATE or mode == pca.fieldMode.DEFAULT
-          id = field.element
-          $("##{id}").trigger('change')
+      toApply = ""
+      for model in scope.models
+        toApply += "#{model.model} = '#{address[model.acField]}';\n"
+
+      scope.$parent.$apply(toApply)
 
       scope.onPopulate?({address: address})
     )

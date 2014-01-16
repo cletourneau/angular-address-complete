@@ -2,30 +2,34 @@
 (function() {
   var ac;
 
-  ac = angular.module('fa-address-complete', []);
+  ac = angular.module('ac-address-complete', []);
 
-  ac.directive('faAddressComplete', function() {
+  ac.directive('acAddressComplete', function() {
     return {
       restrict: 'A',
       scope: {
-        fields: '=faFields',
-        options: '=faOptions',
-        onPopulate: '&faOnPopulate'
+        models: '=acModels',
+        options: '=acOptions',
+        onPopulate: '&acOnPopulate'
       },
-      link: function(scope, element) {
-        var control;
-        control = new pca.Address(scope.fields, scope.options);
-        return control.listen("populate", function(address) {
-          var field, id, mode, _i, _len, _ref;
-          _ref = scope.fields;
-          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-            field = _ref[_i];
-            mode = field.mode;
-            if (mode === pca.fieldMode.POPULATE || mode === pca.fieldMode.DEFAULT) {
-              id = field.element;
-              $("#" + id).trigger('change');
-            }
+      link: function(scope, element, attrs) {
+        var control, elementId;
+        elementId = attrs.id;
+        control = new pca.Address([
+          {
+            element: elementId,
+            mode: pca.fieldMode.SEARCH
           }
+        ], scope.options);
+        return control.listen("populate", function(address) {
+          var model, toApply, _i, _len, _ref;
+          toApply = "";
+          _ref = scope.models;
+          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+            model = _ref[_i];
+            toApply += "" + model.model + " = '" + address[model.acField] + "';\n";
+          }
+          scope.$parent.$apply(toApply);
           return typeof scope.onPopulate === "function" ? scope.onPopulate({
             address: address
           }) : void 0;
