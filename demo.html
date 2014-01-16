@@ -12,13 +12,13 @@
         <div id="address">
             <label>Adresse</label>
             <input id="addressLookup" type="text" placeholder="Commencez la recherche ici" autocomplete="off" data-ac-address-complete data-ac-options="acOptions" data-ac-models="acModels" data-ac-on-populate="addressPopulated(address)">
-            <input id="numeroCivique" type="text" placeholder="Numéro" data-ng-model="civicNumber">
-            <input id="rue" type="text" placeholder="Rue" data-ng-model="street">
-            <input id="appartement" type="text" placeholder="App" data-ng-model="appartment">
-            <input id="ville" type="text" placeholder="Ville" data-ng-model="city">
-            <input id="province" type="text" placeholder="Province" data-ng-model="province">
-            <input id="codePostal" type="text" placeholder="Code postal" data-ng-model="postalCode">
-            {{civicNumber}} {{street}} {{acOptions.key}}
+            <input id="numeroCivique" type="text" placeholder="Numéro" data-ng-model="address.civicNumber">
+            <input id="rue" type="text" placeholder="Rue" data-ng-model="address.street">
+            <input id="appartement" type="text" placeholder="App" data-ng-model="address.appartment">
+            <input id="ville" type="text" placeholder="Ville" data-ng-model="address.city">
+            <input id="province" type="text" placeholder="Province" data-ng-model="address.province">
+            <input id="codePostal" type="text" placeholder="Code postal" data-ng-model="address.postalCode">
+            {{address.civicNumber}} {{address.street}} {{acOptions.key}}
         </div>
     </div>
 </div>
@@ -34,16 +34,17 @@
     app.controller('AppCtrl', function($scope) {
 
         $scope.acModels = [
-            { model: "civicNumber", acField: "BuildingNumber" },
-            { model: "street", acField: "Street" },
-            { model: "appartment", acField: "SubBuilding" },
-            { model: "city", acField: "City" },
-            { model: "province", acField: "Province" },
-            { model: "postalCode", acField: "PostalCode" }
+            { model: "address.civicNumber", acField: "BuildingNumber" },
+            { model: "address.street", acField: "Street" },
+            { model: "address.appartment", acField: "SubBuilding" },
+            { model: "address.city", acField: "City" },
+            { model: "address.province", acField: "Province" },
+            { model: "address.postalCode", acField: "PostalCode" }
         ];
 
         $scope.acOptions = {
-            key: "RE49-RM71-UC95-XU84"
+            key: "RE49-RM71-UC95-XU84",
+            suppressAutocomplete: true
         };
 
         $scope.addressPopulated = function(address) {
