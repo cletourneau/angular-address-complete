@@ -1,6 +1,6 @@
 {
   "name": "address-complete",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Angular International Address Finder (wrapper of https://www.canadapost.ca/pca/)",
   "main": ["js/address-complete.js"],
   "authors": [
