@@ -1,6 +1,6 @@
 {
   "name": "address-complete",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "description": "Angular Boostrap International Address Finder (wrapper of https://www.canadapost.ca/pca/)",
   "main": ["js/address-complete.js"],
   "authors": [
